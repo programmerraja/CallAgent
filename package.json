@@ -1,0 +1,16 @@
+{
+  "name": "callagent",
+  "version": "1.0.0",
+  "description": "A outbound calling agent ",
+  "main": "agent.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "k.boopathi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "twilio": "^5.4.3",
+    "ws": "^8.18.0"
+  }
+}
