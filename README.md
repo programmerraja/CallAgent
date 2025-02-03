@@ -6,6 +6,7 @@ If you're not yet familiar with ElevenLabs, let me quickly introduce it. ElevenL
 Twilio, on the other hand, is a cloud communications platform that enables developers to integrate messaging, voice, and video capabilities into applications. It provides APIs for SMS, voice calls, email, and more. Businesses use Twilio to connect with customers via various communication channels.
 
 Building the Outgoing Call Agent
+![Screenshot from 2025-02-02 17-35-00](https://github.com/user-attachments/assets/f14b182d-1b96-4f6b-a59e-fa7a18f30e98)
 Prerequisites:
 ElevenLabs account (10k free credits)
 Twilio account with an active phone number
