@@ -1,19 +1,24 @@
+
 We are living in the era of AI agents, where people are increasingly developing these tools to automate mundane tasks. Today, we’ll explore how to build our own call agent using Twilio and ElevenLabs. While our primary focus will be on understanding how the system works and its architecture, I’ll provide the relevant code and additional resources at the end of the blog for those interested in digging deeper.
 
-Introduction to ElevenLabs and Twilio
-If you're not yet familiar with ElevenLabs, let me quickly introduce it. ElevenLabs is an AI platform that allows you to convert audio to text and vice versa. It features advanced AI audio models that generate realistic, versatile, and contextually aware speech, voices, and sound effects across 32 languages. For more information, check out their official page.
+#### Introduction to ElevenLabs and Twilio
+
+If you're not yet familiar with ElevenLabs, let me quickly introduce it. ElevenLabs is an AI platform that allows you to convert audio to text and vice versa. It features advanced AI audio models that generate realistic, versatile, and contextually aware speech, voices, and sound effects across 32 languages. For more information, check out their [official page](https://elevenlabs.io/about).
 
 Twilio, on the other hand, is a cloud communications platform that enables developers to integrate messaging, voice, and video capabilities into applications. It provides APIs for SMS, voice calls, email, and more. Businesses use Twilio to connect with customers via various communication channels.
 
-Building the Outgoing Call Agent
-![Screenshot from 2025-02-02 17-35-00](https://github.com/user-attachments/assets/f14b182d-1b96-4f6b-a59e-fa7a18f30e98)
-Prerequisites:
-ElevenLabs account (10k free credits)
-Twilio account with an active phone number
-flow diagram
+### Building the Outgoing Call Agent
+
+#### Prerequisites:
+
+- **[ElevenLabs account](https://elevenlabs.io/)** (10k free credits)
+- **[Twilio account](https://www.twilio.com/en-us/messaging)** with an active phone number
+
+![flow diagram](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/j5d96y0xin7tz0z26ojp.png)
 
 First we will initiate the call with Twilio and set up the stream as follows: (we passed the to number in query params check the code for more details)
 
+```js
 const twilioClient = new Twilio(
   process.env.TWILIO_ACC, // Twilio Account SID from environment variables
   process.env.TWILIO_KEY // Twilio Auth Token from environment variables
@@ -47,21 +52,26 @@ twilioClient.calls
       error: error.message,
     });
   });
-Twilio Streams is a feature that allows you to access raw audio from your Programmable Voice calls. By sending the live audio stream to a destination of your choice using WebSockets, you can build use cases like real-time transcriptions, sentiment analysis, voice authentication, and more. For more details, check out Twilio's documentation on Streams.
+```
+
+Twilio Streams is a feature that allows you to access raw audio from your Programmable Voice calls. By sending the live audio stream to a destination of your choice using WebSockets, you can build use cases like real-time transcriptions, sentiment analysis, voice authentication, and more. For more details, check out [Twilio's documentation on Streams](https://www.twilio.com/docs/voice/twiml/stream).
 
 Once the call is connected, Twilio establishes a WebSocket connection with our server. When we successfully receive this connection, we’ll begin receiving the following events:
 
-start – Triggered when the call starts.
-media – Incoming media (audio) from Twilio in Base64 format.
-stop – Triggered when the call ends.
+- **start** – Triggered when the call starts.
+- **media** – Incoming media (audio) from Twilio in Base64 format.
+- **stop** – Triggered when the call ends.
+
 We will also generate a signed URL for the ElevenLabs agent. Once the WebSocket connection with ElevenLabs is established, we will start receiving the following events:
 
-conversation_initiation_metadata – Contains metadata when the connection is established. For our purposes, we can ignore this.
-audio – The agent’s audio in Base64 format.
-interruption – Triggered whenever the user interrupts the agent’s speech. Upon receiving this event, we need to clear the Twilio audio buffer so the agent stops speaking and responds to the user’s interruption.
-ping – Used to check the connection status.
+- **conversation_initiation_metadata** – Contains metadata when the connection is established. For our purposes, we can ignore this.
+- **audio** – The agent’s audio in Base64 format.
+- **interruption** – Triggered whenever the user interrupts the agent’s speech. Upon receiving this event, we need to clear the Twilio audio buffer so the agent stops speaking and responds to the user’s interruption.
+- **ping** – Used to check the connection status.
+
 With two active WebSocket connections (one to Twilio and one to ElevenLabs), we can now pipe the user’s audio to the agent and vice versa. This creates a realtime communication flow between the agent and the user, facilitating an interactive, automated phone call.
 
+```js
 // Handle WebSocket connection from Twilio
 websocket.on("connection", async (ws) => {
   console.log("Stream connected from Twilio");
@@ -151,6 +161,19 @@ websocket.on("connection", async (ws) => {
     }
   }
 });
+
+```
+
+
+## Resources
+
+- [How to Search for and Buy a Twilio Phone Number from Console](https://help.twilio.com/articles/223135247-How-to-Search-for-and-Buy-a-Twilio-Phone-Number-from-Console)
+- [What is a Twilio Account SID and Where Can I Find It?](https://help.twilio.com/articles/14726256820123-What-is-a-Twilio-Account-SID-and-where-can-I-find-it-)
+- [Everything You Need to Know About Conversational AI Agents](https://elevenlabs.io/blog/everything-you-need-to-know-about-conversational-ai-agents)
+- [Conversational AI Overview](https://elevenlabs.io/docs/conversational-ai/overview)
+- [How to Create an Agent in ElevenLabs](https://elevenlabs.io/docs/conversational-ai/quickstart)
+- [Sending generated audio through Twilio](https://elevenlabs.io/docs/cookbooks/text-to-speech/twilio)
+- [Learn how to configure inbound calls for your agent with Twilio.](https://elevenlabs.io/docs/conversational-ai/guides/twilio/dashboard)
 
 
 check out the blog [here](https://medium.com/@programmerraja/automating-conversations-building-a-smart-call-agent-using-twilio-and-elevenlabs-37b6acfba3eb)
