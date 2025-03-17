@@ -1,0 +1,16 @@
+[project]
+name = "twilio-with-azure-pipecat"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "fastapi>=0.115.11",
+    "onnxruntime>=1.21.0",
+    "pipecat>=0.3.0",
+    "pipecat-ai[azure]>=0.0.58",
+    "twilio>=9.5.0",
+    "uvicorn>=0.34.0",
+    "websockets>=15.0.1",
+]
