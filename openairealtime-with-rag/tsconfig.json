@@ -1,0 +1,27 @@
+{
+  "ts-node": {
+    "files": true
+  },
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin",
+        "alwaysShowRuleFailuresAsWarnings": false,
+        "ignoreDefinitionFiles": true,
+        "configFile": "./tslint.json",
+        "suppressWhileTypeErrorsPresent": false
+      }
+    ],
+    "target": "es2018",
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es6"]
+  },
+  "include": ["index.ts"],
+  "exclude": ["node_modules/**/*"]
+}

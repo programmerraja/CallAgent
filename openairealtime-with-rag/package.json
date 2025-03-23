@@ -1,0 +1,23 @@
+{
+  "name": "openairealtime-with-rag",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && tsc --importHelpers",
+    "build:w": "tsc --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@llamaindex/openai": "^0.1.61",
+    "@llamaindex/qdrant": "^0.1.8",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "langfuse": "^3.37.0",
+    "llamaindex": "^0.9.11",
+    "twilio": "^5.5.1",
+    "ws": "^8.18.1"
+  }
+}
