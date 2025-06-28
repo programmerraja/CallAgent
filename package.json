@@ -9,6 +9,7 @@
   "author": "k.boopathi",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^17.0.0",
     "express": "^4.21.2",
     "twilio": "^5.4.3",
     "ws": "^8.18.0"
